@@ -1,4 +1,4 @@
-package br.com.ada.observability.observability;
+package br.com.ada.observability;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

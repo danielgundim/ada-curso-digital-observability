@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+  app:
+    image: aplicacao-ada-curso-digital-observability
+    container_name: ada-observability-app-java
+    ports:
+      - 8081:8080
+    environment:
+      - DATABASE_HOST=banco
+      - DATABASE_PORT=3306
+      - DATABASE_NAME=observability
+      - DATABASE_USERNAME=root
+      - DATABASE_PASSWORD=root
+    depends_on:
+      - banco
+
+  banco:
+    image: banco-dados-ada-curso-digital-observability
+    container_name: ada-observability-banco-dados
+    ports:
+      - 3308:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=observability
+
+  prometheus:
+    image: prom/prometheus
+    container_name: ada-observability-admin-prometheus
+    ports:
+      - 9091:9090
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      - cadvisor
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3001:3000
+    volumes:
+      - ./grafana:/var/lib/grafana
+    container_name: ada-observability-admin-grafana
+    depends_on:
+      - prometheus
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: ada-observability-admin-cadvisor
+    ports:
+      - 8082:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro

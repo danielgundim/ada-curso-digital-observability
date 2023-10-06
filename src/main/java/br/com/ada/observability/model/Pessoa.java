@@ -1,4 +1,4 @@
-package br.com.ada.observability.observability.model;
+package br.com.ada.observability.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

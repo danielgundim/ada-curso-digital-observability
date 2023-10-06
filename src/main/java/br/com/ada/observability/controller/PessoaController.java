@@ -1,7 +1,8 @@
-package br.com.ada.observability.observability.controller;
+package br.com.ada.observability.controller;
 
-import br.com.ada.observability.observability.model.Pessoa;
-import br.com.ada.observability.observability.repository.PessoaRepository;
+
+import br.com.ada.observability.model.Pessoa;
+import br.com.ada.observability.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
