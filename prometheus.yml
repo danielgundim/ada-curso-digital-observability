@@ -11,18 +11,13 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: ['localhost:9090']
-  - job_name: app
-    scrape_interval: 5s
-    static_configs:
-    - targets:
-      - app:5000
   - job_name: cadvisor
     scrape_interval: 5s
     static_configs:
     - targets:
       - cadvisor:8080
-  - job_name: aplicacao-localhost
+  - job_name: app
     scrape_interval: 5s
     static_configs:
-    - targets: [ '192.168.15.13:8080' ]
+    - targets: [ 'app:8080' ]
     metrics_path: /actuator/prometheus

@@ -1,24 +1,27 @@
 import requests
 import threading
+import os
 
-# Função que realiza a requisição e imprime o status
+
+endpoint = os.environ.get("ENDPOINT")
+
+
 def realizar_requisicao():
     while True:
-        requisicao = requests.get("http://localhost:8080/api/pessoas")
+        # http://localhost:8080/api/pessoas
+        requisicao = requests.get(endpoint)
+        print(endpoint)
         print(requisicao.status_code)
 
-# Número de threads que você deseja criar
-num_threads = 5  # Você pode ajustar conforme necessário
 
-# Lista para armazenar as threads
+num_threads = 5
+
 threads = []
 
-# Crie e inicie as threads
 for _ in range(num_threads):
     thread = threading.Thread(target=realizar_requisicao)
     thread.start()
     threads.append(thread)
 
-# Aguarde que todas as threads terminem (elas estarão em execução eternamente)
 for thread in threads:
     thread.join()
