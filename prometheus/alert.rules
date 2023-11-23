@@ -1,0 +1,25 @@
+# Arquivo de Configuração do Prometheus com um template de alerta
+groups:
+- name: ErrosApp
+  rules:
+  - alert: Erros500
+    expr: rate(http_server_requests_seconds_count{instance="app:8080",job="app",method="GET",status=~"5.."}[5m]) > 50
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Alta taxa de erros 500"
+      description: |
+        *Erro 500 Detectado!*
+                A taxa de erros 500 está acima do normal.
+                Valor atual: {{ $value }} requisições por segundo.
+                Isso está ocorrendo há mais de 30 segundos.
+                Verifique o serviço e acesse os logs para mais detalhes.
+  - alert: Erros400
+    expr: rate(http_server_requests_seconds_count{instance="app:8080",job="app",method="GET",status=~"4.."}[5m]) > 70
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Alta taxa de erros 400"
+      description:

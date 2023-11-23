@@ -3,14 +3,13 @@ global:
   evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
 
 rule_files:
+  - "alert.rules"
 
-# A scrape configuration containing exactly one endpoint to scrape:
-# Here it's Prometheus itself.
 scrape_configs:
   - job_name: prometheus
     scrape_interval: 5s
     static_configs:
-      - targets: ['localhost:9090']
+      - targets: ['prometheus:9091']
   - job_name: cadvisor
     scrape_interval: 5s
     static_configs:
@@ -21,3 +20,10 @@ scrape_configs:
     static_configs:
     - targets: [ 'app:8080' ]
     metrics_path: /actuator/prometheus
+
+alerting:
+  alertmanagers:
+    - scheme: http
+      static_configs:
+        - targets:
+            - 'alertmanager:9093'

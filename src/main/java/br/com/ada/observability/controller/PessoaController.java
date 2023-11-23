@@ -1,6 +1,7 @@
 package br.com.ada.observability.controller;
 
 
+import br.com.ada.observability.metrics.PessoaMetrics;
 import br.com.ada.observability.model.Pessoa;
 import br.com.ada.observability.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ import java.util.Random;
 public class PessoaController {
     @Autowired
     private PessoaRepository pessoaRepository;
+
+    @Autowired
+    private PessoaMetrics pessoaMetrics;
 
     @GetMapping
     public ResponseEntity<List<Pessoa>> listarPessoas() {
@@ -34,7 +38,15 @@ public class PessoaController {
     @ResponseStatus(HttpStatus.CREATED)
     public Pessoa criarPessoa(@RequestBody Pessoa pessoa) {
         System.out.println("Pessoa: " + pessoa);
-        return pessoaRepository.save(pessoa);
+        Pessoa novaPessoa = pessoaRepository.save(pessoa);
+
+        if (pessoa.getIdade() < 18) {
+            pessoaMetrics.incrementCustomCounter();
+        } else {
+            System.out.println("Passei por aqui.");
+        }
+
+        return novaPessoa;
     }
 }
 
