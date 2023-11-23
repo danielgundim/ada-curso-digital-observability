@@ -2,7 +2,7 @@ version: '3'
 
 services:
   app:
-    image: aplicacao-ada-curso-digital-observability
+    image: ada-observability-app-java
     container_name: ada-observability-app-java
     ports:
       - 8080:8080

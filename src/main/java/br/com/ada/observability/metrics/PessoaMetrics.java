@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class PessoaMetrics {
 
-    private final Counter pessoaCounter;
+    private final Counter pessoaMaioridade;
 
     @Autowired
     public PessoaMetrics(MeterRegistry registry){
-        pessoaCounter = Counter.builder("pessoa_maioridade").description("Teste pessoa").register(registry);
+        pessoaMaioridade = Counter.builder("pessoa_maioridade").description("Métrica destinada a observar a quantidade de pessoas cadastradas com maioridade.").register(registry);
     }
 
-    public void incrementCustomCounter(){
-        pessoaCounter.increment();
+    public void incrementPessoaMaioridadeCounter(){
+        pessoaMaioridade.increment();
     }
 }

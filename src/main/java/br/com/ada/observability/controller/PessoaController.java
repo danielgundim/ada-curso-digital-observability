@@ -40,10 +40,10 @@ public class PessoaController {
         System.out.println("Pessoa: " + pessoa);
         Pessoa novaPessoa = pessoaRepository.save(pessoa);
 
-        if (pessoa.getIdade() < 18) {
-            pessoaMetrics.incrementCustomCounter();
+        if (pessoa.getIdade() >= 18) {
+            pessoaMetrics.incrementPessoaMaioridadeCounter();
         } else {
-            System.out.println("Passei por aqui.");
+            System.out.println("Pessoa menoridade.");
         }
 
         return novaPessoa;
